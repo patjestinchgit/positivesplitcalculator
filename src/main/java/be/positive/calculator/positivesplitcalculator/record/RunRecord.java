@@ -13,7 +13,8 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Entity
+@Entity()
+@TableGenerator(name = "run")
 public class RunRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
