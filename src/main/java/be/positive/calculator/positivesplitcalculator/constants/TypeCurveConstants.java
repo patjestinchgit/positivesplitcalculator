@@ -1,11 +1,10 @@
-package be.positive.calculator.positivesplitcalculator.types;
-
-import java.math.MathContext;
+package be.positive.calculator.positivesplitcalculator.constants;
 
 public class TypeCurveConstants {
     private final static String LOGARITMITIC = "logaratmitic";
     private final static String EXPONENTIAL = "exponential";
     private final static String SIMPLE_FUNCTION = "function";
+    private final static String CONSTANT_FUNCTION = "constant_function";
 
     public static String getLogaritmitic() {
         return "log(b)[x]";
@@ -16,6 +15,10 @@ public class TypeCurveConstants {
     }
 
     public static String getFunction() {
+        return "x";
+    }
+
+    public static String getConstantFunction() {
         return "x";
     }
 }

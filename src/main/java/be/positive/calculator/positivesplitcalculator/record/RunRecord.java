@@ -1,7 +1,7 @@
 package be.positive.calculator.positivesplitcalculator.record;
 
 import lombok.*;
-import org.springframework.data.util.ProxyUtils;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalTime;
@@ -13,41 +13,31 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Entity()
-@TableGenerator(name = "run")
+@Entity
+@Table(name = "run_records")
 public class RunRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "pk_run_record_id", nullable = false)
+    private Long pkRunRecordId;
 
+    @Column(name = "name_run_record")
+    private String nameRunRecord;
+    @Column(name = "distance")
     private Double distance;
-    private LocalTime totalTime;
-    private Double splitDistance;
-    private ArrayList<LocalTime> splitTimes;
+    @Column(name = "total_time_seconds")
+    private int totalTimeSeconds;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public RunRecord(Double distance, LocalTime totalTime, Double splitDistance, ArrayList<LocalTime> splitTimes) {
-        this.distance = distance;
-        this.totalTime = totalTime;
-        this.splitDistance = splitDistance;
-        this.splitTimes = splitTimes;
-    }
+    @ManyToOne
+    @JoinColumn(name = "fk_type_curve_id")
+    private TypeCurveRecord typeCurveRecord;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || ProxyUtils.getUserClass(this) != ProxyUtils.getUserClass(o))
-            return false;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         RunRecord runRecord = (RunRecord) o;
-        return id != null && Objects.equals(id, runRecord.id);
+        return pkRunRecordId != null && Objects.equals(pkRunRecordId, runRecord.pkRunRecordId);
     }
 
     @Override

@@ -1,10 +1,10 @@
 package be.positive.calculator.positivesplitcalculator.sercvice;
 
-import be.positive.calculator.positivesplitcalculator.entity.Run;
-import be.positive.calculator.positivesplitcalculator.record.RunRecord;
+import be.positive.calculator.positivesplitcalculator.dto.RunRecordDto;
+import be.positive.calculator.positivesplitcalculator.entity.RunEntity;
 
 public interface RunService {
 
-    public RunRecord getRunRecord(Long id);
-    public RunRecord createNewRunRecord(Run run);
+    public RunRecordDto getRunRecord(Long id);
+    RunEntity createNewRunRecord(RunEntity runEntity);
 }
