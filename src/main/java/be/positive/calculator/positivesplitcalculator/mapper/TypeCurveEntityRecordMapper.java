@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
 public class TypeCurveEntityRecordMapper {
 
     private final EntityRecordMapper entityRecordMapper;
+    private final EntityRecordMapperBasicFields entityRecordMapperBasicFields;
 
     public TypeCurveEntityRecordMapper() {
         this.entityRecordMapper = new EntityRecordMapper();
+        this.entityRecordMapperBasicFields = new EntityRecordMapperBasicFields();
     }
 
     public void mapEntityRecord(TypeCurveEntity typeCurveEntity, TypeCurveRecord typeCurveRecord) {
@@ -23,10 +25,22 @@ public class TypeCurveEntityRecordMapper {
         entityRecordMapper.map(typeCurveRecord, typeCurveEntity);
     }
 
+    public void mapRecordEntityBasicFields(TypeCurveRecord typeCurveRecord, TypeCurveEntity typeCurveEntity) {
+        entityRecordMapperBasicFields.map(typeCurveRecord, typeCurveEntity);
+    }
+
 
     static class EntityRecordMapper extends ConfigurableMapper {
         protected void configure(MapperFactory factory) {
             factory.classMap(TypeCurveEntity.class, TypeCurveRecord.class)
+                    .byDefault().register();
+        }
+    }
+
+    static class EntityRecordMapperBasicFields extends ConfigurableMapper {
+        protected void configure(MapperFactory factory) {
+            factory.classMap(TypeCurveEntity.class, TypeCurveRecord.class)
+                    .exclude("runRecords")
                     .byDefault().register();
         }
     }

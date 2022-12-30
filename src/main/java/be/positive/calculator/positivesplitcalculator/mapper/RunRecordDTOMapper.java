@@ -6,6 +6,9 @@ import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class RunRecordDTOMapper {
 
@@ -13,6 +16,16 @@ public class RunRecordDTOMapper {
 
     public RunRecordDTOMapper () {
         this.dtoRecordMapper = new DtoRecordMapper();
+    }
+
+    public List<RunRecordDto> mappingRunDtoList(List<RunRecord> runRecords) {
+        List<RunRecordDto> runRecordDtoList = new ArrayList<>();
+        RunRecordDto runRecordDto = new RunRecordDto();
+        for (RunRecord runRecord : runRecords) {
+            mapRecordDto(runRecord, runRecordDto);
+            runRecordDtoList.add(runRecordDto);
+        }
+        return runRecordDtoList;
     }
 
     public void mapDtoRecord(RunRecordDto runRecordDto, RunRecord runRecord) {

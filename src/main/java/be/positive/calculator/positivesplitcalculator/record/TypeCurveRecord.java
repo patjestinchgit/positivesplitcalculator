@@ -10,13 +10,15 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@ToString
-@RequiredArgsConstructor
 @Table(name = "type_curves")
 public class TypeCurveRecord {
 
     @Id
     @Column(name = "pk_type_curve_id")
+    //TO FOLLOW: https://stackoverflow.com/questions/2595124/how-does-the-jpa-sequencegenerator-annotation-work
+    //https://vladmihalcea.com/jpa-entity-identifier-sequence/
+    @GeneratedValue(generator="pk_type_curve_id_seq")
+    @SequenceGenerator(name="pk_type_curve_id_seq",sequenceName="pk_type_curve_id_seq", allocationSize=1)
     private Long pkTypeCurveId;
 
     @Column(name = "name_type_curve")
@@ -25,7 +27,16 @@ public class TypeCurveRecord {
     private String formula;
 
     @OneToMany
+    @JoinColumn(name = "fk_type_curve_id")
     private List<RunRecord> runRecords;
+
+    public TypeCurveRecord() {
+    }
+
+    public TypeCurveRecord(String nameTypeCurve, String formula) {
+        this.nameTypeCurve = nameTypeCurve;
+        this.formula = formula;
+    }
 
     @Override
     public boolean equals(Object o) {

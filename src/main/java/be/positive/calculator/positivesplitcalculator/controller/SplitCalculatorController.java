@@ -14,33 +14,24 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/runs")
 public class SplitCalculatorController {
-    private final RunServiceImpl runServiceImpl;
-    private final TypeServiceImpl typeServiceImpl;
+	private final RunServiceImpl runServiceImpl;
 
-    @Autowired
-    public SplitCalculatorController(RunServiceImpl runServiceImpl, TypeServiceImpl typeServiceImpl) {
-        this.runServiceImpl = runServiceImpl;
-        this.typeServiceImpl = typeServiceImpl;
-    }
+	@Autowired
+	public SplitCalculatorController(RunServiceImpl runServiceImpl) {
+		this.runServiceImpl = runServiceImpl;
 
-    @GetMapping("/greeting")
-    public String getRoot() {
-        return "Hello from root";
-    }
+	}
 
-    @GetMapping("/run/{id}")
-    public RunRecordDto getRunRecord(@PathVariable Long id) {
-        return runServiceImpl.getRunRecord(id);
-    }
+	@GetMapping("/run/{id}")
+	public RunRecordDto getRunRecord(@PathVariable Long id) {
+		return runServiceImpl.getRunRecord(id);
+	}
 
-    @PostMapping("/{run}")
-    public RunEntity calculateNewRun(@RequestBody RunEntity runEntity) {
-        return runServiceImpl.createNewRunRecord(runEntity);
-    }
+	@PostMapping("/save/{run}")
+	public RunEntity calculateNewRun(@RequestBody RunEntity runEntity) {
+		return runServiceImpl.createNewRunRecord(runEntity);
+	}
 
-    @GetMapping("/typecurves/all")
-    public List<TypeCurveEntity> getAllTypeCurves () {
-        return typeServiceImpl.getAllTypeCurves();
-    }
+
 
 }

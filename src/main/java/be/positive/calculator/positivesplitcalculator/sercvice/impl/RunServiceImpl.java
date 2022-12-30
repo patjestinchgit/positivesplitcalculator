@@ -37,7 +37,7 @@ public class RunServiceImpl implements RunService {
             runRecord = runRepository.findById(id).get();
         }
         runRecordDTOMapper.mapRecordDto(runRecord, runRecordDto);
-        typeCurveEntityRecordMapper.mapRecordEntity(runRecord.getTypeCurveRecord(), typeCurveEntity);
+        typeCurveEntityRecordMapper.mapRecordEntityBasicFields(runRecord.getTypeCurveRecord(), typeCurveEntity);
         runRecordDto.setTypeCurveEntity(typeCurveEntity);
         return runRecordDto;
     }

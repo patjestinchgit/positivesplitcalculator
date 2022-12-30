@@ -11,17 +11,19 @@ public class RunEntity {
     private int totalTimeRun;
     private TypeCurveEntity typeCurveEntity;
     private int secondsX;
+    private String formula;
 
     public RunEntity() {
     }
 
-    public RunEntity(String name, Double totalDistance, int amountSplits, int totalTimeRun, TypeCurveEntity typeCurveEntity, int secondsX) {
+    public RunEntity(String name, Double totalDistance, int amountSplits, int totalTimeRun, TypeCurveEntity typeCurveEntity, int secondsX, String formula) {
         this.name = name;
         this.totalDistance = totalDistance;
         this.amountSplits = amountSplits;
         this.totalTimeRun = totalTimeRun;
         this.typeCurveEntity = typeCurveEntity;
         this.secondsX = secondsX;
+        this.formula = formula;
     }
 
 }

@@ -6,5 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TypeRepository extends JpaRepository<TypeCurveRecord, Long> {
-
+	boolean existsByNameTypeCurveOrFormula(String nameTypeCurve, String formula);
+	TypeCurveRecord findByNameTypeCurveAndFormula(String nameTypeCurve, String formula);
+	void deleteByNameTypeCurveAndFormula(String nameTypeCurve, String formula);
 }
