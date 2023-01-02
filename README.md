@@ -16,9 +16,11 @@ This application is the backend for calcualating the splits for the type of curv
 
 ## Setup development environment
 
-<p>Because of the use of mapping with Orika, you will need to add the following as Virtual Arguments:</p> <br/>
-<code>
---add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED
-</code>
+<p>Because of the use of mapping with Orika, you will need to add the following as Virtual Arguments:</p> 
+
+   ```bash
+      --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED
+   ```
+
       
 
