@@ -22,6 +22,11 @@ public class SplitCalculatorController {
 
 	}
 
+	@GetMapping("run/greeting")
+	public String greeting() {
+		return "greeting";
+	}
+
 	@GetMapping("/run/{id}")
 	public RunRecordDto getRunRecord(@PathVariable Long id) {
 		return runServiceImpl.getRunRecord(id);

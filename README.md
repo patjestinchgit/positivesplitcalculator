@@ -14,4 +14,11 @@ This application is the backend for calcualating the splits for the type of curv
    ```
    4. Connect to the database with the prefered ide with the following: </br> user : posgtres </br> password : password
 
+## Setup development environment
+
+<p>Because of the use of mapping with Orika, you will need to add the following as Virtual Arguments:</p> <br/>
+<code>
+--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED
+</code>
+      
 

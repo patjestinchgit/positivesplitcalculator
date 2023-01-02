@@ -34,7 +34,7 @@ public class SplitCalculatorTypeController {
 		return typeServiceImpl.createCurveEntity(typeCurveEntity);
 	}
 
-	@RequestMapping(path = "/delete/{typeCurve}", method = RequestMethod.DELETE)
+	@DeleteMapping(path = "/delete/{typeCurve}")
 	void deleteTypeCurveEntity(@PathVariable TypeCurveEntity typeCurve) {
 		if(typeServiceImpl.checkTypeExists(typeCurve)) {
 			throw new TypeCurveDoesNotExistsException();

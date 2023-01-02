@@ -30,14 +30,14 @@ public class TypeCurveEntityRecordMapper {
     }
 
 
-    static class EntityRecordMapper extends ConfigurableMapper {
+    public static class EntityRecordMapper extends ConfigurableMapper {
         protected void configure(MapperFactory factory) {
             factory.classMap(TypeCurveEntity.class, TypeCurveRecord.class)
                     .byDefault().register();
         }
     }
 
-    static class EntityRecordMapperBasicFields extends ConfigurableMapper {
+    public static class EntityRecordMapperBasicFields extends ConfigurableMapper {
         protected void configure(MapperFactory factory) {
             factory.classMap(TypeCurveEntity.class, TypeCurveRecord.class)
                     .exclude("runRecords")

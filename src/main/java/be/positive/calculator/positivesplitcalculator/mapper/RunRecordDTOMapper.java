@@ -14,7 +14,7 @@ public class RunRecordDTOMapper {
 
     private final DtoRecordMapper dtoRecordMapper;
 
-    public RunRecordDTOMapper () {
+    public RunRecordDTOMapper() {
         this.dtoRecordMapper = new DtoRecordMapper();
     }
 
@@ -37,11 +37,12 @@ public class RunRecordDTOMapper {
         return runRecordDto;
     }
 
-    static class DtoRecordMapper extends ConfigurableMapper {
+    public static class DtoRecordMapper extends ConfigurableMapper {
         @Override
-        protected void configure(MapperFactory factory) {
+        public void configure(MapperFactory factory) {
             factory.classMap(RunRecordDto.class, RunRecord.class)
                     .byDefault().register();
         }
     }
 }
+
