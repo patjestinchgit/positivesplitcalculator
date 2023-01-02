@@ -22,5 +22,9 @@ This application is the backend for calcualating the splits for the type of curv
       --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED
    ```
 
-      
+## Set Swagger
+<p>Click following link for more personal adaptation: </p>
+
+[https://www.baeldung.com/spring-rest-openapi-documentation.html](https://www.baeldung.com/spring-rest-openapi-documentation.html)
+
 

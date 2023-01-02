@@ -101,9 +101,9 @@
             <version>3.0.0</version>
         </dependency>
         <dependency>
-            <groupId>org.webjars.npm</groupId>
-            <artifactId>swagger-ui</artifactId>
-            <version>4.15.2</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.4</version>
         </dependency>
 
 
