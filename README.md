@@ -27,4 +27,11 @@ This application is the backend for calcualating the splits for the type of curv
 
 [https://www.baeldung.com/spring-rest-openapi-documentation.html](https://www.baeldung.com/spring-rest-openapi-documentation.html)
 
+<p>This is set now on the url:</p>
+
+[http://localhost:8080/springdoc.swagger-ui.path=/swagger-ui-custom.html](http://localhost:8080/springdoc.swagger-ui.path=/swagger-ui-custom.html)
+
+
+
+
 
