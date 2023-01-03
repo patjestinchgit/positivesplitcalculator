@@ -15,8 +15,6 @@ public class TypeCurveRecord {
 
     @Id
     @Column(name = "pk_type_curve_id")
-    //TO FOLLOW: https://stackoverflow.com/questions/2595124/how-does-the-jpa-sequencegenerator-annotation-work
-    //https://vladmihalcea.com/jpa-entity-identifier-sequence/
     @GeneratedValue(generator="pk_type_curve_id_seq")
     @SequenceGenerator(name="pk_type_curve_id_seq",sequenceName="pk_type_curve_id_seq", allocationSize=1)
     private Long pkTypeCurveId;

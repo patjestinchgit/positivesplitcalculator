@@ -1,14 +1,11 @@
 package be.positive.calculator.positivesplitcalculator.controller;
 
 import be.positive.calculator.positivesplitcalculator.dto.RunRecordDto;
-import be.positive.calculator.positivesplitcalculator.entity.RunEntity;
-import be.positive.calculator.positivesplitcalculator.entity.TypeCurveEntity;
+import be.positive.calculator.positivesplitcalculator.entity.adapt.RunEntityCreated;
+import be.positive.calculator.positivesplitcalculator.entity.create.RunEntityNew;
 import be.positive.calculator.positivesplitcalculator.sercvice.impl.RunServiceImpl;
-import be.positive.calculator.positivesplitcalculator.sercvice.impl.TypeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -33,8 +30,8 @@ public class SplitCalculatorController {
 	}
 
 	@PostMapping("/save/{run}")
-	public RunEntity calculateNewRun(@RequestBody RunEntity runEntity) {
-		return runServiceImpl.createNewRunRecord(runEntity);
+	public RunEntityCreated calculateNewRun(@RequestBody RunEntityNew runEntityNew) {
+		return runServiceImpl.createNewRunRecord(runEntityNew);
 	}
 
 

@@ -1,12 +1,16 @@
 package be.positive.calculator.positivesplitcalculator.sercvice.impl;
 
-import be.positive.calculator.positivesplitcalculator.entity.TypeCurveEntity;
+import be.positive.calculator.positivesplitcalculator.entity.adapt.TypeCurveEntityCreated;
+import be.positive.calculator.positivesplitcalculator.entity.create.TypeCurveEntityNew;
 import be.positive.calculator.positivesplitcalculator.exception.TypeCurveAllReadyExists;
+import be.positive.calculator.positivesplitcalculator.exception.TypeCurveDoesNotExistsException;
 import be.positive.calculator.positivesplitcalculator.mapper.RunRecordDTOMapper;
 import be.positive.calculator.positivesplitcalculator.mapper.TypeCurveEntityRecordMapper;
 import be.positive.calculator.positivesplitcalculator.record.TypeCurveRecord;
 import be.positive.calculator.positivesplitcalculator.repository.TypeRepository;
 import be.positive.calculator.positivesplitcalculator.sercvice.TypeService;
+import be.positive.calculator.positivesplitcalculator.utils.Utility;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,26 +31,35 @@ public class TypeServiceImpl implements TypeService {
 
 
 	@Override
-	public List<TypeCurveEntity> getAllTypeCurves() {
+	public List<TypeCurveEntityCreated> getAllTypeCurves() {
 		return mapToEntities(typeRepository.findAll());
 	}
 
 	@Override
-	public TypeCurveEntity createCurveEntity(TypeCurveEntity typeCurveEntity) throws TypeCurveAllReadyExists {
-		TypeCurveEntity typeCurveNewEntity = new TypeCurveEntity();
-		typeRepository.save(new TypeCurveRecord(typeCurveEntity.getNameTypeCurve(), typeCurveEntity.getFormula()));
-		typeCurveEntityRecordMapper.mapRecordEntity(typeRepository.findByNameTypeCurveAndFormula(typeCurveEntity.getNameTypeCurve(), typeCurveEntity.getFormula()), typeCurveNewEntity);
+	public TypeCurveEntityCreated createCurveEntity(TypeCurveEntityNew typeCurveEntityNew) throws TypeCurveAllReadyExists {
+		TypeCurveEntityCreated typeCurveNewEntity = new TypeCurveEntityCreated();
+		typeRepository.save(new TypeCurveRecord(typeCurveEntityNew.getNameTypeCurve(), typeCurveEntityNew.getFormula()));
+		typeCurveEntityRecordMapper.mapRecordEntity(typeRepository.findByNameTypeCurveAndFormula(typeCurveEntityNew.getNameTypeCurve(), typeCurveEntityNew.getFormula()), typeCurveNewEntity);
 		return typeCurveNewEntity;
 	}
 
 	@Override
-	public void deleteCurveEntity(TypeCurveEntity typeCurveEntity) {
-		typeRepository.deleteByNameTypeCurveAndFormula(typeCurveEntity.getNameTypeCurve(), typeCurveEntity.getFormula());
+	public void deleteCurveEntity(TypeCurveEntityCreated typeCurveEntityCreated) {
+		TypeCurveRecord typeCurveRecord = typeRepository.findByNameTypeCurveAndFormula(typeCurveEntityCreated.getNameTypeCurve(), typeCurveEntityCreated.getFormula());
+		if(typeCurveRecord != null) {
+			typeRepository.delete(typeCurveRecord);
+		}
+
 	}
 
 	@Override
-	public void getCurveEntity(Long id) {
+	public TypeCurveEntityCreated getCurveEntityById(Long id) {
+		TypeCurveEntityCreated typeCurveEntityCreated = new TypeCurveEntityCreated();
+		if(id != null) {
+			typeCurveEntityRecordMapper.mapRecordEntity(typeRepository.findById(id).orElseThrow(TypeCurveDoesNotExistsException::new), typeCurveEntityCreated);
+		}
 
+		return typeCurveEntityCreated;
 	}
 
 	@Override
@@ -55,25 +68,44 @@ public class TypeServiceImpl implements TypeService {
 	}
 
 	@Override
-	public boolean checkTypeExists(TypeCurveEntity typeCurveEntity) {
-		return typeRepository.existsByNameTypeCurveOrFormula(typeCurveEntity.getNameTypeCurve(), typeCurveEntity.getFormula());
+	public boolean checkTypeExists(TypeCurveEntityNew typeCurveEntityNew) {
+		return typeRepository.existsByNameTypeCurveOrFormula(typeCurveEntityNew.getNameTypeCurve(), typeCurveEntityNew.getFormula());
 	}
 
 	@Override
-	public boolean checkTypeUsedByRunEntity(TypeCurveEntity typeCurve) {
+	public boolean checkTypeUsedByRunEntity(TypeCurveEntityNew typeCurve) {
 		return typeRepository.findByNameTypeCurveAndFormula(typeCurve.getNameTypeCurve(), typeCurve.getFormula()).getRunRecords().isEmpty();
 	}
 
-	private List<TypeCurveEntity> mapToEntities(List<TypeCurveRecord> typeCurveRecords) {
-		TypeCurveEntity typeCurveEntity;
+	@Override
+	public List<TypeCurveEntityCreated> searchByTypeCurveNameOrFormula(String typeCurveName, String formula) {
+		List<TypeCurveRecord> typeCurveRecordList = new ArrayList<>();
+		if(StringUtils.isEmpty(typeCurveName) && StringUtils.isNoneEmpty(formula)) {
+			typeCurveRecordList = typeRepository.searchTypeCurveRecordsByFormulaLikeIgnoreCase(
+					Utility.convertNullEmptyToSomethingOrLowerCaseAndTrim(formula));
+		}
+		else if(StringUtils.isEmpty(formula) && StringUtils.isNoneEmpty(typeCurveName)) {
+			typeCurveRecordList = typeRepository.searchTypeCurveRecordsByNameTypeCurveLikeIgnoreCase(
+					Utility.convertNullEmptyToSomethingOrLowerCaseAndTrim(typeCurveName));
+		}
+		else {
+			typeCurveRecordList = typeRepository.searchTypeCurveRecordsByNameTypeCurveLikeIgnoreCaseOrFormulaLikeIgnoreCase(
+					Utility.convertNullEmptyToSomethingOrLowerCaseAndTrim(typeCurveName),
+					Utility.convertNullEmptyToSomethingOrLowerCaseAndTrim(formula));
+		}
+		return mapToEntities(typeCurveRecordList);
+	}
 
-		List<TypeCurveEntity> typeCurveEntities = new ArrayList<>();
+	private List<TypeCurveEntityCreated> mapToEntities(List<TypeCurveRecord> typeCurveRecords) {
+		TypeCurveEntityCreated typeCurveEntityCreated;
+
+		List<TypeCurveEntityCreated> typeCurveEntities = new ArrayList<>();
 		for (TypeCurveRecord typeCurveRecord : typeCurveRecords
 		) {
-			typeCurveEntity = new TypeCurveEntity();
-			typeCurveEntityRecordMapper.mapRecordEntity(typeCurveRecord, typeCurveEntity);
-			typeCurveEntity.setRunRecordDtoList(runRecordDTOMapper.mappingRunDtoList(typeCurveRecord.getRunRecords()));
-			typeCurveEntities.add(typeCurveEntity);
+			typeCurveEntityCreated = new TypeCurveEntityCreated();
+			typeCurveEntityRecordMapper.mapRecordEntity(typeCurveRecord, typeCurveEntityCreated);
+			typeCurveEntityCreated.setRunRecordDtoList(runRecordDTOMapper.mappingRunDtoList(typeCurveRecord.getRunRecords()));
+			typeCurveEntities.add(typeCurveEntityCreated);
 		}
 		return typeCurveEntities;
 	}

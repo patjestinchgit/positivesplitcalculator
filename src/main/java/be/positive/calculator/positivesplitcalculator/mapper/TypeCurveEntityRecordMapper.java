@@ -1,6 +1,6 @@
 package be.positive.calculator.positivesplitcalculator.mapper;
 
-import be.positive.calculator.positivesplitcalculator.entity.TypeCurveEntity;
+import be.positive.calculator.positivesplitcalculator.entity.adapt.TypeCurveEntityCreated;
 import be.positive.calculator.positivesplitcalculator.record.TypeCurveRecord;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;
@@ -17,29 +17,29 @@ public class TypeCurveEntityRecordMapper {
         this.entityRecordMapperBasicFields = new EntityRecordMapperBasicFields();
     }
 
-    public void mapEntityRecord(TypeCurveEntity typeCurveEntity, TypeCurveRecord typeCurveRecord) {
-        entityRecordMapper.map(typeCurveEntity, typeCurveRecord);
+    public void mapEntityRecord(TypeCurveEntityCreated typeCurveEntityCreated, TypeCurveRecord typeCurveRecord) {
+        entityRecordMapper.map(typeCurveEntityCreated, typeCurveRecord);
     }
 
-    public void mapRecordEntity( TypeCurveRecord typeCurveRecord, TypeCurveEntity typeCurveEntity) {
-        entityRecordMapper.map(typeCurveRecord, typeCurveEntity);
+    public void mapRecordEntity( TypeCurveRecord typeCurveRecord, TypeCurveEntityCreated typeCurveEntityCreated) {
+        entityRecordMapper.map(typeCurveRecord, typeCurveEntityCreated);
     }
 
-    public void mapRecordEntityBasicFields(TypeCurveRecord typeCurveRecord, TypeCurveEntity typeCurveEntity) {
-        entityRecordMapperBasicFields.map(typeCurveRecord, typeCurveEntity);
+    public void mapRecordEntityBasicFields(TypeCurveRecord typeCurveRecord, TypeCurveEntityCreated typeCurveEntityCreated) {
+        entityRecordMapperBasicFields.map(typeCurveRecord, typeCurveEntityCreated);
     }
 
 
     public static class EntityRecordMapper extends ConfigurableMapper {
         protected void configure(MapperFactory factory) {
-            factory.classMap(TypeCurveEntity.class, TypeCurveRecord.class)
+            factory.classMap(TypeCurveEntityCreated.class, TypeCurveRecord.class)
                     .byDefault().register();
         }
     }
 
     public static class EntityRecordMapperBasicFields extends ConfigurableMapper {
         protected void configure(MapperFactory factory) {
-            factory.classMap(TypeCurveEntity.class, TypeCurveRecord.class)
+            factory.classMap(TypeCurveEntityCreated.class, TypeCurveRecord.class)
                     .exclude("runRecords")
                     .byDefault().register();
         }

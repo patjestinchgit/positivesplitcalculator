@@ -1,14 +1,16 @@
 package be.positive.calculator.positivesplitcalculator.controller;
 
-import be.positive.calculator.positivesplitcalculator.entity.TypeCurveEntity;
-import be.positive.calculator.positivesplitcalculator.exception.RunEntityException;
+import be.positive.calculator.positivesplitcalculator.entity.adapt.TypeCurveEntityCreated;
+import be.positive.calculator.positivesplitcalculator.entity.create.TypeCurveEntityNew;
 import be.positive.calculator.positivesplitcalculator.exception.TypeCurveAllReadyExists;
 import be.positive.calculator.positivesplitcalculator.exception.TypeCurveDoesNotExistsException;
 import be.positive.calculator.positivesplitcalculator.exception.TypeCurveUsedByRunException;
 import be.positive.calculator.positivesplitcalculator.sercvice.impl.TypeServiceImpl;
-import org.springframework.http.HttpStatus;
+import net.bytebuddy.utility.nullability.MaybeNull;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Null;
 import java.util.List;
 
 @RestController
@@ -22,27 +24,42 @@ public class SplitCalculatorTypeController {
 	}
 
 	@GetMapping("/typecurves/all")
-	public List<TypeCurveEntity> getAllTypeCurves() {
+	public List<TypeCurveEntityCreated> getAllTypeCurves() {
 		return typeServiceImpl.getAllTypeCurves();
 	}
 
-	@PostMapping("/save/{typecurveName}")
-	public TypeCurveEntity saveTypeCurveEntity (@RequestBody TypeCurveEntity typeCurveEntity) {
-		if(typeServiceImpl.checkTypeExists(typeCurveEntity)) {
-			throw new TypeCurveAllReadyExists();
-		}
-		return typeServiceImpl.createCurveEntity(typeCurveEntity);
+	@GetMapping(value = "/typecurves/{id}", params = {"id"})
+	public TypeCurveEntityCreated getTypeCurveEntity (@RequestParam Long id) {
+		return typeServiceImpl.getCurveEntityById(id);
 	}
 
-	@DeleteMapping(path = "/delete/{typeCurve}")
-	void deleteTypeCurveEntity(@PathVariable TypeCurveEntity typeCurve) {
-		if(typeServiceImpl.checkTypeExists(typeCurve)) {
+	@GetMapping(value = "/typecurves/searchtypecurve")
+	@ResponseBody
+	public List<TypeCurveEntityCreated> searchByTypeCurveNameOrFormula(
+			@RequestParam(value = "nameTypeCurve", required = false) String nameTypeCurve,
+			@RequestParam(value = "formula", required = false) String formula) {
+		return typeServiceImpl.searchByTypeCurveNameOrFormula(nameTypeCurve, formula);
+	}
+
+	@PostMapping("/save/{typecurveName}")
+	public TypeCurveEntityCreated saveTypeCurveEntity (@RequestBody TypeCurveEntityNew typeCurveEntityNew, @PathVariable String typecurveName) {
+		if(typeServiceImpl.checkTypeExists(typeCurveEntityNew)) {
+			throw new TypeCurveAllReadyExists();
+		}
+		return typeServiceImpl.createCurveEntity(typeCurveEntityNew);
+	}
+
+
+
+	@DeleteMapping(path = "/delete/{typeCurveName}")
+	void deleteTypeCurveEntity(@RequestBody TypeCurveEntityNew typeCurveEntityNew, @PathVariable String typeCurveName) {
+		if(!typeServiceImpl.checkTypeExists(typeCurveEntityNew)) {
 			throw new TypeCurveDoesNotExistsException();
 		}
-		if(typeServiceImpl.checkTypeUsedByRunEntity(typeCurve)) {
+		if(!typeServiceImpl.checkTypeUsedByRunEntity(typeCurveEntityNew)) {
 			throw new TypeCurveUsedByRunException();
 		}
-		typeServiceImpl.deleteCurveEntity(typeCurve);
+		typeServiceImpl.deleteCurveEntity(new TypeCurveEntityCreated(typeCurveEntityNew.getNameTypeCurve(), typeCurveEntityNew.getFormula()));
 	}
 
 }

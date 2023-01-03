@@ -25,11 +25,11 @@ This application is the backend for calcualating the splits for the type of curv
 ## Set Swagger
 <p>Click following link for more personal adaptation: </p>
 
-[https://www.baeldung.com/spring-rest-openapi-documentation.html](https://www.baeldung.com/spring-rest-openapi-documentation.html)
+[https://www.baeldung.com/spring-rest-openapi-documentation](https://www.baeldung.com/spring-rest-openapi-documentation)
 
 <p>This is set now on the url:</p>
 
-[http://localhost:8080/springdoc.swagger-ui.path=/swagger-ui-custom.html](http://localhost:8080/springdoc.swagger-ui.path=/swagger-ui-custom.html)
+[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 
 

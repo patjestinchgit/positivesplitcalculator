@@ -1,11 +1,10 @@
 package be.positive.calculator.positivesplitcalculator.dto;
 
-import be.positive.calculator.positivesplitcalculator.entity.TypeCurveEntity;
+import be.positive.calculator.positivesplitcalculator.entity.adapt.TypeCurveEntityCreated;
 import lombok.Data;
 
+import javax.persistence.Transient;
 import java.io.Serializable;
-import java.time.LocalTime;
-import java.util.ArrayList;
 
 /**
  * A DTO for the {@link be.positive.calculator.positivesplitcalculator.record.RunRecord} entity
@@ -18,5 +17,6 @@ public class RunRecordDto implements Serializable {
     private int totalTimeSeconds;
     private Double splitDistance;
     private int [] splitTimes;
-    private TypeCurveEntity typeCurveEntity;
+    @Transient
+    private TypeCurveEntityCreated typeCurveEntityCreated;
 }
