@@ -63,7 +63,7 @@ public class TypeServiceImpl implements TypeService {
 	}
 
 	@Override
-	public void adaptCurveEntity(Long id, String nameTypeCurve, String formula) {
+	public void adaptCurveEntity(Long id) {
 
 	}
 
@@ -79,7 +79,7 @@ public class TypeServiceImpl implements TypeService {
 
 	@Override
 	public List<TypeCurveEntityCreated> searchByTypeCurveNameOrFormula(String typeCurveName, String formula) {
-		List<TypeCurveRecord> typeCurveRecordList = new ArrayList<>();
+		List<TypeCurveRecord> typeCurveRecordList;
 		if(StringUtils.isEmpty(typeCurveName) && StringUtils.isNoneEmpty(formula)) {
 			typeCurveRecordList = typeRepository.searchTypeCurveRecordsByFormulaLikeIgnoreCase(
 					Utility.convertNullEmptyToSomethingOrLowerCaseAndTrim(formula));

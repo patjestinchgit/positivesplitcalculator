@@ -41,7 +41,7 @@ public class SplitCalculatorTypeController {
 		return typeServiceImpl.searchByTypeCurveNameOrFormula(nameTypeCurve, formula);
 	}
 
-	@PostMapping("/save/{typecurveName}")
+	@PostMapping("/save/new/{typecurveName}")
 	public TypeCurveEntityCreated saveTypeCurveEntity (@RequestBody TypeCurveEntityNew typeCurveEntityNew, @PathVariable String typecurveName) {
 		if(typeServiceImpl.checkTypeExists(typeCurveEntityNew)) {
 			throw new TypeCurveAllReadyExists();
@@ -49,6 +49,7 @@ public class SplitCalculatorTypeController {
 		return typeServiceImpl.createCurveEntity(typeCurveEntityNew);
 	}
 
+	@PostMapping("/save/adapt/{id}")
 
 
 	@DeleteMapping(path = "/delete/{typeCurveName}")

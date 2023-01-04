@@ -11,7 +11,7 @@ public interface TypeService {
     TypeCurveEntityCreated createCurveEntity(TypeCurveEntityNew typeCurveEntityNew) throws RunEntityException;
     void deleteCurveEntity(TypeCurveEntityCreated typeCurveEntityCreated);
     TypeCurveEntityCreated getCurveEntityById(Long id);
-    void adaptCurveEntity(Long id, String nameTypeCurve, String formula);
+    void adaptCurveEntity(Long id);
 
     boolean checkTypeExists(TypeCurveEntityNew typeCurveEntityNew);
     boolean checkTypeUsedByRunEntity(TypeCurveEntityNew typeCurve);
