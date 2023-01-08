@@ -64,3 +64,5 @@ ALTER TABLE public.run_records ADD CONSTRAINT fk_type_curve_id FOREIGN KEY (fk_t
 
 
 
+
+

@@ -63,8 +63,10 @@ public class TypeServiceImpl implements TypeService {
 	}
 
 	@Override
-	public void adaptCurveEntity(Long id) {
-
+	public void adaptCurveEntity(TypeCurveEntityCreated typeCurveEntityCreated) {
+		TypeCurveRecord typeCurveRecord = new TypeCurveRecord();
+		typeCurveEntityRecordMapper.mapEntityRecord(typeCurveEntityCreated, typeCurveRecord);
+		typeRepository.save(typeCurveRecord);
 	}
 
 	@Override

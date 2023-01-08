@@ -50,6 +50,12 @@ public class SplitCalculatorTypeController {
 	}
 
 	@PostMapping("/save/adapt/{id}")
+	public void saveNewTypeCurveEntity(@RequestBody TypeCurveEntityCreated typeCurveEntityCreated) {
+		if(!typeServiceImpl.checkTypeExists(typeCurveEntityCreated)) {
+			throw new TypeCurveDoesNotExistsException();
+		}
+		typeServiceImpl.adaptCurveEntity(typeCurveEntityCreated);
+	}
 
 
 	@DeleteMapping(path = "/delete/{typeCurveName}")
