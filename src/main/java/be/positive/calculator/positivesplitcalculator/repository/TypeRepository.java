@@ -4,12 +4,15 @@ import be.positive.calculator.positivesplitcalculator.record.TypeCurveRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public interface TypeRepository extends JpaRepository<TypeCurveRecord, Long> {
+	@Query("select (count(t) > 0) from TypeCurveRecord t where t.pkTypeCurveId = ?1")
+	boolean runEntityRecordExists(@NonNull Long pkTypeCurveId);
 	boolean existsByNameTypeCurveOrFormula(String nameTypeCurve, String formula);
 	TypeCurveRecord findByNameTypeCurveAndFormula(String nameTypeCurve, String formula);
 

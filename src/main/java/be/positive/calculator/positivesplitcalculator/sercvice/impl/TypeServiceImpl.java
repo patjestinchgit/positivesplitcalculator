@@ -66,7 +66,13 @@ public class TypeServiceImpl implements TypeService {
 	public void adaptCurveEntity(TypeCurveEntityCreated typeCurveEntityCreated) {
 		TypeCurveRecord typeCurveRecord = new TypeCurveRecord();
 		typeCurveEntityRecordMapper.mapEntityRecord(typeCurveEntityCreated, typeCurveRecord);
-		typeRepository.save(typeCurveRecord);
+		if(typeCurveRecord.getPkTypeCurveId() == null || !typeRepository.runEntityRecordExists(typeCurveEntityCreated.getPkTypeCurveId())) {
+			throw new TypeCurveDoesNotExistsException("You try to replace a not existing runentity");
+		}
+		else {
+			typeRepository.save(typeCurveRecord);
+		}
+
 	}
 
 	@Override

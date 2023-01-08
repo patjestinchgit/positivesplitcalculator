@@ -49,7 +49,7 @@ public class SplitCalculatorTypeController {
 		return typeServiceImpl.createCurveEntity(typeCurveEntityNew);
 	}
 
-	@PostMapping("/save/adapt/{id}")
+	@PostMapping("/save/adapt")
 	public void saveNewTypeCurveEntity(@RequestBody TypeCurveEntityCreated typeCurveEntityCreated) {
 		if(!typeServiceImpl.checkTypeExists(typeCurveEntityCreated)) {
 			throw new TypeCurveDoesNotExistsException();
