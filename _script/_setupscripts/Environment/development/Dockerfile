@@ -6,3 +6,4 @@ EXPOSE 5432/TCP
 
 COPY setupscript.sql /docker-entrypoint-initdb.d/
 COPY /_script/_udpatescripts/type_curves_202301081931.sql /docker-entrypoint-initdb.d/
+

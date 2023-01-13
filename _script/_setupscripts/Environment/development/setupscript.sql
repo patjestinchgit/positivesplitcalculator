@@ -14,6 +14,8 @@ create sequence pk_split_record_id_seq start with
 create sequence pk_type_curve_id_seq start with
     1 increment by 1;
 
+create sequence pk_log_request_response_id_seq start with
+    1 increment by 1;
 
 -- create tables
 
@@ -45,6 +47,11 @@ create table run_split_records
     fk_run_record_id   BIGINT,
     fk_split_record_id BIGINT,
     time_split_seconds INT not null
+);
+
+create table log_request_response
+(
+    pk_log_request_response_id BIGINT not null default nextval('pk_log_request_response_id_seq') primary key,
 );
 
 -- create foreign keys
